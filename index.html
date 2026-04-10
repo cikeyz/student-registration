@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- ----- AI USAGE STATEMENT -----
-    I used Antigravity (Google DeepMind) to help with the mini stepper scroll behavior and the active-state logic.
-    I built the rest of this form myself and checked the code so I can still explain it in class.
-  -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Student Registration</title>
@@ -15,9 +11,7 @@
         <meta name="author" content="Student" />
         <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
-        <!-- ----- GOOGLE FONTS -----
-    I'm loading DM Sans and DM Mono here because they carry most of the notebook look for this page.
-  -->
+        
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -25,17 +19,13 @@
             rel="stylesheet"
         />
 
-        <!-- ----- STYLESHEET -----
-    This is the main CSS file for the layout, the form cards, and the custom controls.
-  -->
+        
         <link rel="stylesheet" href="style.css" />
     </head>
 
     <body>
         <main class="container">
-            <!-- ----- PAGE HEADER -----
-      This keeps the title and the school branding together before the form starts.
-    -->
+            
             <header class="page-header">
                 <div>
                     <p class="eyebrow">registration form</p>
@@ -65,9 +55,7 @@
                 </div>
             </header>
 
-            <!-- ----- REGISTRATION FORM -----
-      This is the main form wrapper, and the file upload means I still need multipart encoding here.
-    -->
+            
             <form
                 id="registration-form"
                 action="#"
@@ -75,9 +63,7 @@
                 enctype="multipart/form-data"
                 novalidate
             >
-                <!-- ----- MINI STEPPER -----
-        This side nav lets the user jump between sections without hunting through the whole page.
-      -->
+                
                 <nav id="section-stepper" aria-label="Form Sections">
                     <ol>
                         <li>
@@ -119,9 +105,7 @@
                     </ol>
                 </nav>
 
-                <!-- ----- PERSONAL INFORMATION SECTION -----
-        I put the basic identity fields first so the form eases in with the most familiar details.
-      -->
+                
                 <fieldset class="form-section" id="section-personal">
                     <legend>01. Personal Information</legend>
 
@@ -229,9 +213,7 @@
                     </section>
                 </fieldset>
 
-                <!-- ----- ACADEMIC DETAILS SECTION -----
-        This is where the school-side info goes, like enrollment type and uploaded documents.
-      -->
+                
                 <fieldset class="form-section" id="section-academic">
                     <legend>02. Academic Details</legend>
 
@@ -313,9 +295,7 @@
                     </div>
                 </fieldset>
 
-                <!-- ----- ACCOUNT SETUP SECTION -----
-        This part handles login details plus the skill and interest fields tied to the application.
-      -->
+                
                 <fieldset class="form-section" id="section-account">
                     <legend>03. Account Setup</legend>
 
@@ -544,9 +524,7 @@
                     />
                 </fieldset>
 
-                <!-- ----- PROFILE SECTION -----
-        This one is just for the photo upload and the short bio with a live counter.
-      -->
+                
                 <fieldset class="form-section" id="section-profile">
                     <legend>04. Profile</legend>
 
@@ -582,9 +560,7 @@
                     </div>
                 </fieldset>
 
-                <!-- ----- SELF-IDENTIFICATION SECTION -----
-        These are the optional demographic questions, so I kept the note visible at the top.
-      -->
+                
                 <fieldset class="form-section" id="section-selfid">
                     <legend>05. Self-Identification</legend>
                     <p class="section-note">
@@ -859,9 +835,7 @@
                     </div>
                 </fieldset>
 
-                <!-- ----- ADDITIONAL NOTES SECTION -----
-        I kept this last as the catch-all spot for anything the earlier sections did not cover.
-      -->
+                
                 <fieldset class="form-section" id="section-notes">
                     <legend>06. Additional Notes</legend>
                     <div class="input-group">
@@ -878,9 +852,7 @@
                     </div>
                 </fieldset>
 
-                <!-- ----- FORM ACTIONS -----
-        I kept the buttons at the bottom so the reset and submit actions stay easy to find.
-      -->
+                
                 <footer class="bottom-actions">
                     <input
                         type="hidden"
@@ -902,9 +874,7 @@
             </form>
         </main>
 
-        <!-- ----- SCRIPT FILE -----
-    The JavaScript lives down here so the HTML is already on the page before the handlers run.
-  -->
+        
         <script src="script.js"></script>
     </body>
 </html>
