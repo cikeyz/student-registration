@@ -1,6 +1,4 @@
-/* --- 1. ELEMENTS ---
-   I grabbed the main elements once up here so the rest of the file stays easier to follow.
-*/
+
 const form = document.getElementById("registration-form");
 const firstNameInput = document.getElementById("fname");
 const submissionIdField = document.getElementById("submission_id");
@@ -19,9 +17,6 @@ const floatingGroups = document.querySelectorAll(".floating-group");
 const stepperButtons = document.querySelectorAll("#section-stepper button");
 const formSections = document.querySelectorAll("fieldset.form-section");
 
-/* --- 2. SHARED LISTS ---
-   These little lists keep the repeated limits and field checks in one place.
-*/
 const counterConfigs = [
   {
     input: document.getElementById("short_bio"),
@@ -50,9 +45,6 @@ const stepperState = {
   currentId: "",
 };
 
-/* --- 3. STARTUP ---
-   I run the setup once here so the page is ready before the user starts filling the form out.
-*/
 if (form) initForm();
 
 /* This sets the starting page state so the rest of the handlers can stay simple. */
@@ -67,7 +59,7 @@ function initForm() {
   initSectionStepper();
   if (firstNameInput) firstNameInput.focus();
 }
-/* This writes the same submission ID into both hidden fields so the form stays in sync. */
+
 function setSubmissionId() {
   const submissionId = "SUB-" + Date.now();
   if (submissionIdField) submissionIdField.value = submissionId;
@@ -104,7 +96,7 @@ function updatePhotoPreview() {
   photoPreview.style.display = "none";
   photoPlaceholder.style.display = "block";
 }
-/* This prints the school document name so the user can check the upload at a glance. */
+
 function updateSchoolDocsName() {
   if (!schoolDocsInput || !schoolDocsName) return;
   schoolDocsName.textContent =
@@ -112,11 +104,11 @@ function updateSchoolDocsName() {
       ? schoolDocsInput.files[0].name
       : "no file selected";
 }
-/* This refreshes only the counter that belongs to the textarea the user just changed. */
+
 function handleCounterInput(event) {
   refreshCounter(event.currentTarget);
 }
-/* This updates one counter and flips the warning style if the text goes over the limit. */
+
 function refreshCounter(input) {
   for (const config of counterConfigs) {
     if (config.input !== input || !config.counter) continue;
@@ -126,7 +118,7 @@ function refreshCounter(input) {
     break;
   }
 }
-/* This switches the password field between hidden and visible so the text is easier to verify. */
+
 function togglePasswordVisibility(event) {
   const toggle = event.currentTarget;
   const input = document.getElementById(toggle.getAttribute("data-target"));
@@ -187,12 +179,12 @@ function paintPasswordStrength(score) {
     strengthLabel.textContent = label;
   }
 }
-/* This runs the custom reset work because the native reset does not clear the extra UI states. */
+
 function handleResetClick() {
   form.reset();
   resetCustomUi();
 }
-/* This clears the custom visuals so the form really looks reset after the button is pressed. */
+
 function resetCustomUi() {
   clearValidationState();
   updatePhotoPreview();
@@ -201,14 +193,14 @@ function resetCustomUi() {
   for (const group of floatingGroups) group.classList.remove("float-active");
   paintPasswordStrength(0);
 }
-/* This removes the old error messages and red classes before the next validation pass runs. */
+
 function clearValidationState() {
   const errorMessages = document.querySelectorAll(".error-msg");
   const errorFields = document.querySelectorAll(".input-error");
   for (const message of errorMessages) message.remove();
   for (const field of errorFields) field.classList.remove("input-error");
 }
-/* This stops the normal submit first so the script can validate the form on the page. */
+
 function handleFormSubmit(event) {
   event.preventDefault();
   clearValidationState();
@@ -222,7 +214,7 @@ function handleFormSubmit(event) {
   }
   form.submit();
 }
-/* This checks the required fields, email, passwords, and interest checkboxes before submit. */
+
 function validateForm() {
   const result = { isValid: true, firstErrorField: null };
   for (const id of requiredFieldIds) {
@@ -273,7 +265,7 @@ function validateForm() {
 
   return result;
 }
-/* This drops an error message in the right place and remembers the first field that failed. */
+
 function markInvalid(result, input, message, isGroup) {
   result.isValid = false;
 
@@ -300,7 +292,7 @@ function markInvalid(result, input, message, isGroup) {
   parentGroup.appendChild(error);
   if (!result.firstErrorField) result.firstErrorField = input;
 }
-/* This attaches the floating-label listeners and sets the starting label positions. */
+
 function initFloatingLabels() {
   for (const group of floatingGroups) {
     const input = group.querySelector("input");
@@ -328,7 +320,7 @@ function syncFloatingLabel(source) {
     group.classList.remove("float-active");
   }
 }
-/* This sets up the mini stepper so the buttons can scroll and track the active form section. */
+
 function initSectionStepper() {
   if (!stepperButtons.length || !formSections.length) return;
   for (const button of stepperButtons)
@@ -353,7 +345,7 @@ function handleSectionIntersection(entries) {
     if (!atBottom) setActiveStep(stepperState.currentId);
   }
 }
-/* This scrolls to the clicked section and holds the active state while the smooth scroll finishes. */
+
 function handleStepButtonClick(event) {
   event.preventDefault();
   const button = event.currentTarget;
@@ -366,11 +358,11 @@ function handleStepButtonClick(event) {
     targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
   stepperState.scrollTimeout = window.setTimeout(unlockStepper, 800);
 }
-/* This releases the stepper lock after the click-based smooth scroll should already be done. */
+
 function unlockStepper() {
   stepperState.isClickScrolling = false;
 }
-/* This makes sure the last step still lights up when the page is already at the bottom. */
+
 function handlePageScroll() {
   if (stepperState.isClickScrolling) return;
   const atBottom =
@@ -383,7 +375,7 @@ function handlePageScroll() {
   }
   if (stepperState.currentId) setActiveStep(stepperState.currentId);
 }
-/* This swaps the active class on the stepper buttons so only the matching one stays highlighted. */
+
 function setActiveStep(targetId) {
   for (const button of stepperButtons) {
     if (button.getAttribute("data-target") === targetId) {

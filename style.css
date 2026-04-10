@@ -1,7 +1,4 @@
-/* ---------------------------
-   1. DESIGN TOKENS
-   I kept the palette and the type sizes here so the rest of the file stays easier to scan.
-   --------------------------- */
+
 :root {
   --color-bg: #FEFCF7;
   --color-surface: #FFFDF9;
@@ -24,10 +21,6 @@
   --max-width: 640px;
 }
 
-/* ---------------------------
-   2. BASE SETUP
-   This is just the basic reset so the custom form styles behave the same everywhere.
-   --------------------------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -73,10 +66,6 @@ button {
   font-size: 100%;
 }
 
-/* ---------------------------
-   3. SHARED TYPE
-   I grouped the mono text here so the little labels and helper bits all feel consistent.
-   --------------------------- */
 label,
 legend,
 .eyebrow,
@@ -92,10 +81,6 @@ legend,
   font-family: 'DM Mono', monospace;
 }
 
-/* ---------------------------
-   4. PAGE HEADER
-   This keeps the heading and the logos on one line until the screen gets tight.
-   --------------------------- */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -159,10 +144,6 @@ legend,
   margin-left: 2px;
 }
 
-/* ---------------------------
-   5. FORM CARDS
-   Each fieldset is one card so the long form still feels broken into smaller chunks.
-   --------------------------- */
 .form-section {
   margin-bottom: 24px;
   padding: 28px 28px 24px;
@@ -197,10 +178,6 @@ legend {
   font-size: var(--text-xs);
 }
 
-/* ---------------------------
-   6. LAYOUT HELPERS
-   These are the reusable grid and stack pieces that keep the form lined up.
-   --------------------------- */
 .grid-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -259,10 +236,6 @@ legend {
   justify-content: flex-end;
 }
 
-/* ---------------------------
-   7. LABELS AND HELPER TEXT
-   I kept the small text rules together so it is easier to tweak spacing without jumping around.
-   --------------------------- */
 label,
 .group-label {
   display: block;
@@ -310,10 +283,6 @@ label {
   text-transform: none;
 }
 
-/* ---------------------------
-   8. FORM CONTROLS
-   The text fields use the underline style, while selects and uploads stay as boxed controls.
-   --------------------------- */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -418,10 +387,6 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-/* ---------------------------
-   9. PASSWORD UI
-   I kept these rules together because the toggle and the strength meter work as one little block.
-   --------------------------- */
 .label-header {
   display: flex;
   justify-content: space-between;
@@ -472,10 +437,6 @@ input[type="checkbox"] {
   font-size: 0.72rem;
 }
 
-/* ---------------------------
-   10. ERROR STATES AND PREVIEW BITS
-   These pieces handle the red validation feedback plus the custom photo preview area.
-   --------------------------- */
 .input-error {
   border-bottom-color: var(--color-error) !important;
 }
@@ -520,10 +481,6 @@ textarea.input-error {
   font-size: var(--text-xs);
 }
 
-/* ---------------------------
-   11. ACTION BUTTONS
-   The reset and submit buttons are simple on purpose so the form itself stays the main focus.
-   --------------------------- */
 .bottom-actions {
   display: flex;
   flex-direction: column;
@@ -574,10 +531,6 @@ textarea.input-error {
   color: var(--color-text);
 }
 
-/* ---------------------------
-   12. MINI STEPPER
-   This is hidden on smaller screens so it only shows up when there is enough room for it.
-   --------------------------- */
 #section-stepper {
   display: none;
   position: fixed;
@@ -620,10 +573,6 @@ textarea.input-error {
   transform: scale(1.25);
 }
 
-/* ---------------------------
-   13. SMALL ANIMATION
-   This is just the tiny fade for validation messages so they do not pop in too harshly.
-   --------------------------- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -636,10 +585,6 @@ textarea.input-error {
   }
 }
 
-/* ---------------------------
-   14. RESPONSIVE TWEAKS
-   I kept the media rules together at the bottom so they are easier to double-check.
-   --------------------------- */
 @media (max-width: 639px) {
   .page-header {
     flex-direction: column-reverse;
