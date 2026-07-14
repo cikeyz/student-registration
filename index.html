@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ----- AI USAGE STATEMENT ----- 
+    I used Antigravity (AI) specifically to help implement the mini section stepper navigation, especially its scrolling complexities and active state logic. I built everything else in this form myself.
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration</title>
+  <meta name="description"
+    content="Student registration form for the Computer Engineering Department, Polytechnic University of the Philippines, Manila.">
+  <meta name="author" content="Student">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- ----- TYPOGRAPHY ----- 
+    I'm loading DM Sans and DM Mono here to achieve that Warm Mono Notebook aesthetic I'm going for. 
+    The preconnects help the fonts load a bit faster.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400;1,9..40,500;1,9..40,600&display=swap"
+    rel="stylesheet">
+
+  <!-- ----- STYLESHEET ----- 
+    Linking my main CSS file for all the layout grids and custom form styling.
+  -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="container">
+    <!-- ----- HEADER ----- 
+      This keeps the PUP branding visible at the top. 
+      I used a 2-column flex layout so the text sits nicely beside the logos.
+    -->
+    <header class="page-header">
+      <div class="header-text">
+        <p class="eyebrow">registration form</p>
+        <h1>Student<br><span class="accent-word">Information</span></h1>
+        <p class="hero-subtitle">Fill in your details. Fields marked <span class="req" aria-hidden="true">*</span> are
+          required.</p>
+      </div>
+      <div class="logo-bar">
+        <img src="assets/pup-logo.png" alt="Polytechnic University of the Philippines seal" class="logo-img">
+        <div class="logo-divider"></div>
+        <img src="assets/cpe-logo.png" alt="Computer Engineering Department logo" class="logo-img">
+      </div>
+    </header>
+
+    <!-- ----- REGISTRATION FORM ----- 
+      This is the main wrapper for all my inputs. 
+      I made sure to include enctype="multipart/form-data" since I have a file upload field inside.
+    -->
+    <form id="registration-form" action="#" method="post" enctype="multipart/form-data" novalidate>
+
+      <!-- ----- MINI STEPPER ----- 
+        This is a bonus navigation I added so users can jump between long sections quickly.
+        The AI helped me with the smooth scrolling and intersection observer logic here.
+      -->
+      <nav id="section-stepper" aria-label="Form Sections">
+        <ol>
+          <li><button type="button" data-target="section-personal">01</button></li>
+          <li><button type="button" data-target="section-academic">02</button></li>
+          <li><button type="button" data-target="section-account">03</button></li>
+          <li><button type="button" data-target="section-profile">04</button></li>
+          <li><button type="button" data-target="section-selfid">05</button></li>
+          <li><button type="button" data-target="section-notes">06</button></li>
+        </ol>
+      </nav>
+
+      <!-- ----- SECTION 1: PERSONAL INFO -----
+        Basic details to start with. I used flex and grid structures to keep the inputs aligned. -->
+      <fieldset class="form-section" id="section-personal">
+        <legend>01. Personal Information</legend>
+
+        <div class="grid-2col">
+          <div class="input-group floating-group">
+            <label for="fname">First Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="fname" name="fname" required>
+          </div>
+          <div class="input-group floating-group">
+            <label for="lname">Last Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="lname" name="lname" required>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="input-group floating-group">
+            <label for="dob">Date of Birth <span class="req" aria-hidden="true">*</span></label>
+            <input type="date" id="dob" name="dob" required>
+          </div>
+          <div class="input-group floating-group">
+            <label for="email">Email Address <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="example@example.com" required>
+          </div>
+        </div>
+
+        <div class="input-group floating-group">
+          <label for="phone">Phone Number</label>
+          <div class="input-prefix-wrap">
+            <span class="country-code">+63</span>
+            <input type="tel" id="phone" name="phone" placeholder="000-000-0000">
+          </div>
+        </div>
+
+        <div class="address-block" style="margin-top: 1rem;">
+          <label class="group-label">Address</label>
+
+          <div class="input-group floating-group" style="margin-top: 12px;">
+            <label for="address">Street Address</label>
+            <input type="text" id="address" name="address">
+          </div>
+
+          <div class="input-group floating-group">
+            <label for="address2">Street Address Line 2 <span class="helper">(optional)</span></label>
+            <input type="text" id="address2" name="address2">
+          </div>
+
+          <div class="grid-2col">
+            <div class="input-group floating-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city">
+            </div>
+            <div class="input-group floating-group">
+              <label for="state">State / Province</label>
+              <input type="text" id="state" name="state">
+            </div>
+          </div>
+
+          <div class="input-group floating-group">
+            <label for="zip">Postal / Zip Code</label>
+            <input type="text" id="zip" name="zip">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ----- SECTION 2: ACADEMIC DETAILS ----- 
+        Gathering school info here. I used a custom flex layout for the enrollment radio buttons to save vertical space. -->
+      <fieldset class="form-section" id="section-academic">
+        <legend>02. Academic Details</legend>
+
+        <div class="input-group floating-group">
+          <label for="program">Applying Specialization</label>
+          <input type="text" id="program" name="program" placeholder="e.g. System Developments">
+        </div>
+
+        <div class="input-group">
+          <label class="group-label">Type of Enrollment</label>
+          <div class="radio-group-flex">
+            <label class="option-label">
+              <input type="radio" name="enrollment_type" value="Regular" checked> Regular
+            </label>
+            <label class="option-label">
+              <input type="radio" name="enrollment_type" value="Irregular"> Irregular
+            </label>
+            <label class="option-label">
+              <input type="radio" name="enrollment_type" value="Transferee"> Transferee
+            </label>
+            <label class="option-label">
+              <input type="radio" name="enrollment_type" value="Returnee"> Returnee
+            </label>
+          </div>
+        </div>
+
+        <div class="input-group doc-upload-group">
+          <label for="school_docs">Upload School Documents</label>
+          <input type="file" id="school_docs" name="school_docs" accept=".pdf,.jpg,.png">
+          <div id="school-docs-filename" class="file-name-display">no file selected</div>
+        </div>
+
+        <div class="input-group">
+          <label for="personal_statement" class="block-label">Personal Statement</label>
+          <textarea id="personal_statement" name="personal_statement" rows="4" cols="50"
+            placeholder="Share what drives you..."></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ----- SECTION 3: ACCOUNT SETUP ----- 
+        This is for their login credentials and tech skills.
+        I styled the password inputs to have a show/hide toggle eventually. -->
+      <fieldset class="form-section" id="section-account">
+        <legend>03. Account Setup</legend>
+
+        <div class="grid-2col">
+          <div class="input-group floating-group">
+            <label for="username">Username <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="input-group floating-group">
+            <label for="age">Age <span class="req" aria-hidden="true">*</span></label>
+            <input type="number" id="age" name="age" min="16" max="60" required>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="input-group floating-group password-group">
+            <div class="label-header">
+              <label for="password">Password <span class="req" aria-hidden="true">*</span></label>
+              <button type="button" class="pwd-toggle" data-target="password">show</button>
+            </div>
+            <input type="password" id="password" name="password" maxlength="128" required>
+            <div id="pwd-strength" class="pwd-strength">
+              <div class="strength-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+              <span class="strength-label"></span>
+            </div>
+          </div>
+
+          <div class="input-group floating-group password-group">
+            <div class="label-header">
+              <label for="confirm_password">Confirm Password <span class="req" aria-hidden="true">*</span></label>
+              <button type="button" class="pwd-toggle" data-target="confirm_password">show</button>
+            </div>
+            <input type="password" id="confirm_password" name="confirm_password" maxlength="128" required>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="input-group">
+            <label for="program_track" class="block-label">Preferred Program Track</label>
+            <select id="program_track" name="program_track">
+              <option value="" disabled selected>-- Select a track --</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Mobile Development">Mobile Development</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Embedded Systems">Embedded Systems</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="skills_tools" class="block-label">Skills / Tools Known</label>
+            <select id="skills_tools" name="skills_tools[]" multiple size="5">
+              <option value="HTML/CSS">HTML/CSS</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="Python">Python</option>
+              <option value="Java">Java</option>
+              <option value="C/C++">C/C++</option>
+              <option value="SQL">SQL</option>
+              <option value="Git">Git</option>
+              <option value="Figma">Figma</option>
+            </select>
+            <span class="helper-text-block">Hold Ctrl/Cmd to select multiple</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="group-label">Tech Interests <span class="req" aria-hidden="true">*</span></label>
+          <div class="checkbox-grid">
+            <label class="option-label"><input type="checkbox" name="interests[]" value="AI & Machine Learning"> AI &
+              Machine Learning</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="Web Development"> Web
+              Development</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="Mobile Apps"> Mobile
+              Apps</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="Cybersecurity">
+              Cybersecurity</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="IoT & Embedded"> IoT &
+              Embedded</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="Cloud Computing"> Cloud
+              Computing</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="UI/UX Design"> UI/UX
+              Design</label>
+            <label class="option-label"><input type="checkbox" name="interests[]" value="Open Source"> Open
+              Source</label>
+          </div>
+          <div id="interests-error-anchor"></div>
+        </div>
+
+        <input type="hidden" id="submission_id" name="submission_id" value="">
+      </fieldset>
+
+      <!-- ----- SECTION 4: PROFILE ----- 
+        Just a quick photo upload and bio section. 
+        I added a character counter for the textarea to keep bios concise. -->
+      <fieldset class="form-section" id="section-profile">
+        <legend>04. Profile</legend>
+
+        <div class="input-group">
+          <label for="profile_photo" class="block-label">Profile Photo</label>
+          <div id="photo-preview-wrap">
+            <img id="photo-preview" src="" alt="Profile preview">
+            <p id="photo-placeholder">no photo selected</p>
+          </div>
+          <input type="file" id="profile_photo" name="profile_photo" accept="image/*">
+        </div>
+
+        <div class="input-group">
+          <label for="short_bio" class="block-label">Short Bio</label>
+          <textarea id="short_bio" name="short_bio" rows="4" cols="50"
+            placeholder="Tell us a little about yourself..."></textarea>
+          <div class="char-counter" id="bio-counter">0 / 200 characters</div>
+        </div>
+      </fieldset>
+
+      <!-- ----- SECTION 5: SELF-IDENTIFICATION ----- 
+        These are voluntary demographic questions. I arranged the radio buttons in columns to make them easier to scan. -->
+      <fieldset class="form-section" id="section-selfid">
+        <legend>05. Self-Identification</legend>
+        <p class="section-note">Voluntary disclosure. This will not influence your application.</p>
+
+        <div class="grid-2col identity-grid">
+          <div class="input-group">
+            <label class="group-label">Veteran Status</label>
+            <div class="radio-group-col">
+              <label class="option-label"><input type="radio" name="veteran" value="I am a veteran"> I am a
+                veteran</label>
+              <label class="option-label"><input type="radio" name="veteran" value="Special disabled veteran"> Special
+                disabled veteran</label>
+              <label class="option-label"><input type="radio" name="veteran" value="Recently separated veteran">
+                Recently separated veteran</label>
+              <label class="option-label"><input type="radio" name="veteran" value="Other protected veteran"> Other
+                protected veteran</label>
+              <label class="option-label"><input type="radio" name="veteran" value="I am not a veteran"> I am not a
+                veteran</label>
+              <label class="option-label"><input type="radio" name="veteran" value="Prefer not to answer"> Prefer not to
+                answer</label>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="group-label">Gender</label>
+            <div class="radio-group-col">
+              <label class="option-label"><input type="radio" name="gender" value="Female"> Female</label>
+              <label class="option-label"><input type="radio" name="gender" value="Male"> Male</label>
+              <label class="option-label"><input type="radio" name="gender" value="Transgender Female"> Transgender
+                Female</label>
+              <label class="option-label"><input type="radio" name="gender" value="Transgender Male"> Transgender
+                Male</label>
+              <label class="option-label"><input type="radio" name="gender" value="Prefer not to answer"> Prefer not to
+                answer</label>
+              <label class="option-label"><input type="radio" name="gender" value="Not listed"> Not listed</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2col identity-grid">
+          <div class="input-group">
+            <label class="group-label">Disabilities</label>
+            <div class="radio-group-col">
+              <label class="option-label"><input type="radio" name="disability" value="No disability"> No
+                disability</label>
+              <label class="option-label"><input type="radio" name="disability" value="Two or more impairments"> Two or
+                more impairments</label>
+              <label class="option-label"><input type="radio" name="disability" value="Specific learning difficulty">
+                Specific learning difficulty</label>
+              <label class="option-label"><input type="radio" name="disability" value="Social / communication"> Social /
+                communication</label>
+              <label class="option-label"><input type="radio" name="disability" value="Long-standing illness">
+                Long-standing illness</label>
+              <label class="option-label"><input type="radio" name="disability" value="Physical impairment"> Physical
+                impairment</label>
+              <label class="option-label"><input type="radio" name="disability" value="Deaf / hearing impairment"> Deaf
+                / hearing impairment</label>
+              <label class="option-label"><input type="radio" name="disability" value="Blind / visual impairment"> Blind
+                / visual impairment</label>
+              <label class="option-label"><input type="radio" name="disability" value="Prefer not to answer"> Prefer not
+                to answer</label>
+              <label class="option-label"><input type="radio" name="disability" value="Other"> Other</label>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="group-label">Race</label>
+            <div class="radio-group-col">
+              <label class="option-label"><input type="radio" name="race" value="American Native / Alaska Native">
+                American Native / Alaska Native</label>
+              <label class="option-label"><input type="radio" name="race" value="Asian"> Asian</label>
+              <label class="option-label"><input type="radio" name="race" value="Black or African American"> Black or
+                African American</label>
+              <label class="option-label"><input type="radio" name="race" value="Native Hawaiian / Pacific Islander">
+                Native Hawaiian / Pacific Islander</label>
+              <label class="option-label"><input type="radio" name="race" value="White"> White</label>
+              <label class="option-label"><input type="radio" name="race" value="Two or more races"> Two or more
+                races</label>
+              <label class="option-label"><input type="radio" name="race" value="Decline to specify"> Decline to
+                specify</label>
+              <label class="option-label"><input type="radio" name="race" value="Other"> Other</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ----- SECTION 6: ADDITIONAL NOTES ----- 
+        A simple catch-all text area for anything else they want to add. -->
+      <fieldset class="form-section" id="section-notes">
+        <legend>06. Additional Notes</legend>
+        <div class="input-group">
+          <label for="additional_notes" class="block-label">Additional Notes</label>
+          <textarea id="additional_notes" name="additional_notes" rows="4" cols="50"
+            placeholder="Anything else you'd like us to know?"></textarea>
+          <div class="char-counter" id="notes-counter">0 / 300 characters</div>
+        </div>
+      </fieldset>
+
+      <!-- ----- BOTTOM CONTROLS ----- 
+        Sticking these buttons at the bottom so they're easy to find once the user finishes the long form.
+      -->
+      <div class="bottom-actions">
+        <input type="hidden" id="submission_id_bottom" name="submission_id_bottom" value="">
+        <div class="btn-group">
+          <input type="button" value="Reset Form" class="btn-reset" id="reset-btn">
+          <button type="submit" class="btn-submit">Create Account &rarr;</button>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- ----- SCRIPTS ----- 
+    Linking my JavaScript out here so it loads after the DOM is ready. 
+    This handles the stepper navigation and form interactions.
+  -->
+  <script src="script.js"></script>
+</body>
+
+</html>

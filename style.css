@@ -1,0 +1,735 @@
+/* ---------------------------
+   1. VARIABLE DEFINITIONS 
+   I set up these custom properties to quickly reference the Warm Mono Notebook color palette 
+   and type scale throughout the project without hardcoding values everywhere.
+   --------------------------- */
+:root {
+  --color-bg: #FEFCF7;
+  --color-surface: #FFFDF9;
+  --color-border: #EDE4D8;
+  --color-input-line: #DDD3C4;
+  --color-text: #1C1814;
+  --color-text-muted: #8A7B6A;
+  --color-accent: #C47A2A;
+  --color-accent-light: #FDF3E3;
+  --color-error: #B83C2B;
+  --color-success: #3A7D44;
+  --color-mono: #9C7849;
+
+  /* Type Scale */
+  --text-xs: 0.72rem;
+  --text-sm: 0.8rem;
+  --text-base: 1rem;
+  --text-lg: 1.1rem;
+  --text-xl: 2rem;
+
+  /* Layout */
+  --max-width: 640px;
+}
+
+/* ---------------------------
+     2. GLOBAL RESET & BASE
+     I'm using a standard box-sizing reset here.
+     I also hid the standard scrollbars globally so the interface looks cleaner, 
+     but users can still scroll normally.
+     --------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide global scrollbars while allowing scroll function */
+html {
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari/Opera */
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 56px 24px;
+  position: relative;
+}
+
+/* Form Element Resets */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+/* ---------------------------
+     3. TYPOGRAPHY FOR MONO LABELS
+     I grouped all the small utility elements here so they consistently use the DM Mono font,
+     which really sets that official notebook vibe.
+     --------------------------- */
+label,
+legend,
+.eyebrow,
+.helper,
+.error-msg,
+.section-note,
+.char-counter,
+.file-name-display,
+.helper-text-block,
+.pwd-toggle,
+.strength-label,
+.success-content {
+  font-family: 'DM Mono', monospace;
+}
+
+/* ---------------------------
+     4. HEADER STYLES
+     I used a flexbox layout here to keep the titles and logos aligned. 
+     The subtle dashed border gives it that printed document feel.
+     --------------------------- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 2px dashed rgba(196, 122, 42, 0.3);
+  /* Subtle accent dashed line */
+}
+
+@media (max-width: 639px) {
+  .page-header {
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+}
+
+.logo-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.logo-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border);
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--color-accent);
+  background: rgba(196, 122, 42, 0.1);
+  border: 1px solid rgba(196, 122, 42, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  letter-spacing: 0.1em;
+  font-size: var(--text-xs);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.eyebrow-divider {
+  color: var(--color-mono);
+  margin: 0 6px;
+  opacity: 0.4;
+}
+
+.page-header h1 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.accent-word {
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+}
+
+.req {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+/* ---------------------------
+     5. FORM SECTIONS (CARDS)
+     Each logical section of the form gets wrapped in one of these cards. 
+     I added a slight hover effect to make the active section stand out a bit.
+     --------------------------- */
+.form-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 28px 28px 24px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  scroll-margin-top: 12vh;
+}
+
+.form-section:hover {
+  border-color: var(--color-input-line);
+}
+
+legend {
+  display: table;
+  float: left;
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+}
+
+.section-note {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+  margin-top: -10px;
+}
+
+/* ---------------------------
+     6. LAYOUT GRIDS
+     These are my reusable grid utility classes. They make it super easy to stack 
+     inputs in 2 or 3 columns on desktop, and they automatically collapse on mobile.
+     --------------------------- */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.input-group {
+  margin-bottom: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 639px) {
+
+  .grid-2col,
+  .grid-3col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .grid-2col .input-group,
+  .grid-3col .input-group {
+    margin-bottom: 24px;
+  }
+}
+
+.grid-2col .input-group,
+.grid-3col .input-group {
+  height: 100%;
+  justify-content: flex-start;
+}
+
+/* ---------------------------
+     7. INPUT STYLES
+     I styled text inputs with just a bottom border for that "fill in the blank" look.
+     I also explicitly lowered the opacity of placeholders so they look like subtle hints.
+     --------------------------- */
+label {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  display: block;
+  transition: transform 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  transform-origin: left top;
+}
+
+.helper {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.helper-text-block {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 6px;
+}
+
+/* Text inputs: underline only */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+input[type="password"] {
+  border: none;
+  border-bottom: 1.5px solid var(--color-input-line);
+  border-radius: 0;
+  background: transparent;
+  padding: 6px 0;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  transition: border-bottom-color 0.2s ease;
+}
+
+/* Explicitly faded placeholder styling */
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+/* For explicit WebKit overrides if necessary */
+::-webkit-input-placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+  border-bottom-color: var(--color-accent);
+  outline: none;
+  box-shadow: none;
+}
+
+/* Input Prefix Wrap (for phone country code) */
+.input-prefix-wrap {
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1.5px solid var(--color-input-line);
+  transition: border-bottom-color 0.2s ease;
+}
+
+.input-prefix-wrap:focus-within {
+  border-bottom-color: var(--color-accent);
+}
+
+.input-prefix-wrap .country-code {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  padding-right: 8px;
+  padding-bottom: 6px;
+  pointer-events: none;
+}
+
+.input-prefix-wrap input {
+  border-bottom: none !important;
+}
+
+/* Floating label feature */
+.floating-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.floating-group input {
+  /* For standard styling, it remains normal. Label floats manually via JS or CSS. 
+       Let's use a JS-toggled class ".focused" or ".has-value" on the .input-group */
+}
+
+/* Float label when class is present */
+.floating-group.float-active label {
+  transform: translateY(-4px) scale(0.9);
+  color: var(--color-accent);
+}
+
+/* Select, Textarea, File: soft full border */
+select,
+textarea,
+input[type="file"] {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  padding: 8px 12px;
+  width: 100%;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+select:focus,
+textarea:focus,
+input[type="file"]:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+/* File inputs */
+input[type="file"]::file-selector-button {
+  font-family: 'DM Mono', monospace;
+  font-size: var(--text-xs);
+  background: #f1ede1;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--color-text);
+  margin-right: 12px;
+}
+
+/* Error state */
+.input-error {
+  border-bottom-color: var(--color-error) !important;
+}
+
+select.input-error,
+textarea.input-error {
+  border-color: var(--color-error) !important;
+}
+
+.error-msg {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  margin-top: 4px;
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Character counter */
+.char-counter {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+  margin-top: 6px;
+}
+
+.char-counter.limit-reached {
+  color: var(--color-error);
+}
+
+/* Record file names */
+.file-name-display {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 6px;
+}
+
+/* Profile Photo Preview */
+#photo-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-bg);
+  border: 1px dashed var(--color-input-line);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+#photo-preview {
+  display: none;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-accent);
+  margin-bottom: 10px;
+}
+
+#photo-placeholder {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Password Show/Hide & Strength */
+.label-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  /* for column layout, we must place it properly */
+}
+
+.pwd-toggle {
+  background: transparent;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  cursor: pointer;
+  letter-spacing: 0;
+}
+
+.pwd-toggle:hover {
+  text-decoration: underline;
+}
+
+.pwd-strength {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.strength-bars {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.strength-bars .bar {
+  height: 6px;
+  border-radius: 3px;
+  flex: 1;
+  background-color: var(--color-border);
+  transition: background-color 0.3s ease;
+}
+
+.strength-label {
+  font-size: 0.72rem;
+  align-self: flex-end;
+}
+
+/* ---------------------------
+     8. CHECKBOX & RADIO
+     I overrode the default accent color to match our theme. 
+     I also set up some flex and grid helpers specifically to align these lists nicely.
+     --------------------------- */
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--color-accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 0;
+  font-family: 'DM Sans', sans-serif;
+  /* Values should be sans readable */
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.radio-group-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.radio-group-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.group-label {
+  margin-bottom: 4px;
+}
+
+.identity-grid {
+  column-gap: 40px;
+}
+
+/* ---------------------------
+     9. BUTTONS & ACTIONS
+     The main submit button sits here. I added some simple hover/active scale animations
+     so it feels responsive when clicked.
+     --------------------------- */
+.bottom-actions {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .btn-group {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .btn-group>* {
+    width: 100%;
+  }
+}
+
+.btn-submit {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+  filter: brightness(0.88);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.btn-reset {
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-family: 'DM Mono', monospace;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+.privacy-note {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ---------------------------
+     10. BONUS FEATURES
+     This holds the styling for the fixed side navigation (the mini stepper).
+     I hide it completely on small screens where it would just take up too much space.
+     --------------------------- */
+
+/* 2. Mini Stepper (Sticky Side Nav for larger screens) */
+#section-stepper {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  font-family: 'DM Mono', monospace;
+}
+
+@media (min-width: 1024px) {
+  #section-stepper {
+    display: block;
+  }
+}
+
+#section-stepper ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#section-stepper button {
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  margin-left: -16px;
+  /* Negate padding to keep visual alignment */
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+#section-stepper button:hover {
+  opacity: 1;
+  color: var(--color-accent);
+}
+
+#section-stepper button.active {
+  color: var(--color-accent);
+  opacity: 1;
+  transform: scale(1.25);
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
